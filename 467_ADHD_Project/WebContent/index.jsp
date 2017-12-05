@@ -10,7 +10,6 @@
 	<H1 ALIGN=CENTER>ADHD/ADD Form</H1>
 	
           <form action="${pageContext.request.contextPath}/SystemEngine"  method="post">
-                <br> Name:<input type=text name=Name size=25>
                 <br> Age:<input type=text name=Age size=25>
                 
 		     <br>How often do you find yourself distracted?<br>
@@ -30,8 +29,38 @@ How often do you feel the need to fidget with something, move your hands and fee
                 <input type=radio name=Q3 value=6>Sometimes<br>
                 <input type=radio name=Q3 value=9>Often<br>
                 
+How often do you avoid activities that require you to pay attention and/or focus?<br>
+                	<input type=radio name=Q4 value=0>Never<br>
+				<input type=radio name=Q4 value=3>Rarely<br>
+                <input type=radio name=Q4 value=6>Sometimes<br>
+                <input type=radio name=Q4 value=9>Often<br>
+                
+How often do you have trouble listening to others when they are talking to you?<br>
+                 <input type=radio name=Q5 value=0>Never<br>
+				<input type=radio name=Q5 value=3>Rarely<br>
+                <input type=radio name=Q5 value=6>Sometimes<br>
+                <input type=radio name=Q5 value=9>Often<br>
+                
+How often do you find yourself losing important things, like keys, wallet, phone, etc.?
+                <input type=radio name=Q6 value=0>Never<br>
+				<input type=radio name=Q6 value=3>Rarely<br>
+                <input type=radio name=Q6 value=6>Sometimes<br>
+                <input type=radio name=Q6 value=9>Often<br>
+                
+How often do you feel like you don’t have enough time to do things and things getting out of control?
+                 <input type=radio name=Q7 value=0>Never<br>
+				<input type=radio name=Q7 value=3>Rarely<br>
+                <input type=radio name=Q7 value=6>Sometimes<br>
+                <input type=radio name=Q7 value=9>Often<br>
+                
+                
+How often while talking do you find yourself changing topics and not being able to keep focus?
+				<input type=radio name=Q8 value=0>Never<br>
+				<input type=radio name=Q8 value=3>Rarely<br>
+                <input type=radio name=Q8 value=6>Sometimes<br>
+                <input type=radio name=Q8 value=9>Often<br>
+                
 Have you had a sudden change in your life, like a recent passing of a relative, divorce, loss of a job, other major event?<br>
-
                 <input type=radio name=Q4 value=1>Yes<br> 
                 <input type=radio name=Q4 value=0>No<br>
                

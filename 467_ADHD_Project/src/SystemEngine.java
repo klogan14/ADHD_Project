@@ -15,7 +15,7 @@ public class SystemEngine extends HttpServlet
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Rete engine;
+	public static	Rete engine = new Rete();
     private WorkingMemoryMarker marker;
    // private Database database;
 
@@ -32,11 +32,11 @@ public class SystemEngine extends HttpServlet
     			/*
     			 * The values we receive from the users are as follows:
     			 * Never = 0
-    			 * Rarely = 0.33
-    			 * Sometimes = .66
-    			 * Often = 0.99
+    			 * Rarely = 3
+    			 * Sometimes = 6
+    			 * Often = 9
     			 */
-    			String name = request.getParameter("Name");
+    			
     			String age = request.getParameter("Age");
     			int q1Ans = Integer.parseInt(request.getParameter("Q1")); // How often do you find yourself distracted?
     			int q2Ans = Integer.parseInt(request.getParameter("Q2"));
@@ -56,33 +56,33 @@ public class SystemEngine extends HttpServlet
 
     			
     			
-    			System.out.println(name+ " " + age + " " + q1Ans + " " + q2Ans +  " " + q3Ans + " " + q4Ans + " " + q5Ans + " " + q6Ans );
+    			System.out.println( age + " " + q1Ans + " " + q2Ans +  " " + q3Ans + " " + q4Ans + " " + q5Ans + " " + q6Ans );
     			
     			//
     	        Rete engine = new Rete();
     	      
-    	        //engine.eval("(deftemplate person (slot name) (slot age) (slot adhdFactor))"); //Declaring the deftemplates
-    	        //engine.eval("(assert(person (name "+name+") (age "+age+") (adhdFactor 0.0)))");
-    	        System.out.println("Got to this point");
-			engine.eval("(deftemplate questions" + " (slot q1)" + " (slot q2)" + " (slot q3)" + " (slot q4)" + " (slot q5)" + " (slot q6)" + ")"); 
-	        System.out.println("After Template");
-	        engine.eval("(defglobal ?*risk-factor* = 0)");
-			engine.eval("(assert(questions (q1 "+q1Ans+") (q2 "+ q2Ans+")"+" (q3 "+ q3Ans+")"+" (q4 "+ q4Ans+")" +" (q5 "+ q5Ans +")" +" (q6 "+ q6Ans +"))" );
+    	        
+			engine.batch("Rules.clp");
+			engine.eval("(deftemplate questions" + " (slot q1)" + " (slot q2)" + " (slot q3)" + " (slot q4)" + " (slot q5)" + " (slot q6)" + ")" +
+					"(defglobal ?*risk-factor* = 0)" +
+					"(assert(questions (q1 "+q1Ans+") (q2 "+ q2Ans+")"+" (q3 "+ q3Ans+")"+" (q4 "+ q4Ans+")" +" (q5 "+ q5Ans +")" +" (q6 "+ q6Ans +"))"//+
+//					
+);
 			
-	        System.out.println("After Assert");
+	        //System.out.println("After Assert");
 
     	        
 			//Add all 
 	        
-	        engine.eval("(defrule Q1Never \n" + 
-					"(questions (q1 ?q1) (q2 ?q2) (q3 ?q3) (q4 ?q4) (q5 ?q5) (q6 ?q6))\n" + 
-					"(test (= ?q1 0))\n" + 
-					"=>\n" + 
-					"  (bind ?*risk-factor*(+ ?*risk-factor* 0))\n" + 
-					"  (printout t \"risk factor = \" ?*risk-factor* crlf)\n" + 
-					")"+
-					"(run)");
-			
+//	        engine.eval("(defrule Q1Never \n" + 
+//					"(questions (q1 ?q1) (q2 ?q2) (q3 ?q3) (q4 ?q4) (q5 ?q5) (q6 ?q6))\n" + 
+//					"(test (= ?q1 0))\n" + 
+//					"=>\n" + 
+//					"  (bind ?*risk-factor*(+ ?*risk-factor* 0))\n" + 
+//					"  (printout t \"risk factor = \" ?*risk-factor* crlf)\n" + 
+//					")"+
+//					"(run)");
+//			
 			// Defrule q1Never = (Defrule) engine.findDefrule("Q1Never");
 		//	    System.out.println(new PrettyPrinter(q1Never));
 
@@ -168,66 +168,45 @@ public class SystemEngine extends HttpServlet
 	{        
 		try 
 		{	
-			
-			
-			
-			
-			
-			
-			Rete engine = new Rete();
-  	      
-	        engine.eval("(deftemplate person (slot name) (slot age) (slot adhdFactor))"); //Declaring the deftemplates
-	        engine.eval("(assert(person (name "+"Kyle"+") (age "+"1"+") (adhdFactor 0.0)))");
-	        System.out.println("Got to this point");
-			
-	        engine.add("(assert(questions (q1 "+0+") (q2 "+ 3+")"+" (q3 "+ 9+")"+" (q4 "+ 1+")" +" (q5 "+ 0 +")" +" (q6 "+ 1 +"))" );
+			engine.reset();
+            engine.batch("Rules.clp");
 
-        System.out.println("After Template");
-
-		engine.add(("(assert(questions (q1 "+5+") (q2 "+ 1+")"+" (q3 "+ 1+")"+" (q4 "+ 1+")" +" (q5 "+ 1 +")" +" (q6 "+ 1 +"))" ));
-		
-        System.out.println("After Assert");
-
-	        
-        Value value = engine.eval("(defrule Q1Never \n" + 
-				"(questions (q1 ?q1) (q2 ?q2) (q3 ?q3) (q4 ?q4) (q5 ?q5) (q6 ?q6))\n" + 
-				"(test (= ?q1 5))\n" + 
-				"=>\n" + 
-				"(printout t \"Answer = \" ?q1 crlf)\n" + 
-				")");
-		
-		 Defrule q1Never = (Defrule) engine.findDefrule("Q1Never");
+		    //engine.add("(assert(questions (q1 "+5+") (q2 "+ 1+")"+" (q3 "+ 1+")"+" (q4 "+ 1+")" +" (q5 "+ 1 +")" +" (q6 "+ 1 +"))");
+            engine.add("(assert(questions (q1 "+0+") (q2 "+ 3+")"+" (q3 "+ 9+")"+" (q4 "+ 1+")" +" (q5 "+ 0 +")" +" (q6 "+ 1 +")))" );
+            int val = engine.run();
+            System.out.println("Return from run" + val);
+            Defrule q1Never = (Defrule) engine.findDefrule("Q1Never");
+            Defrule q2Never = (Defrule) engine.findDefrule("Q2Sometimes");
+            
+            WorkingMemoryMarker mark =  engine.mark();
+            engine.resetToMark(mark);
+            //engine.executeCommand("Q1Never");
+            engine.run();
+            Value val2 = engine.eval("(run)");
+           
+            System.out.println("VAL: " + val2.toStringWithParens());
 		    System.out.println(new PrettyPrinter(q1Never));
+		    System.out.println(new PrettyPrinter(q2Never));
 
-		  System.out.println(engine.run());;
-		 // engine.getObjects(arg0)
-		  System.out.println(value.stringValue(engine.getGlobalContext()));
-			
-			
-			
-		 
-			
-			
-			
-			
-			Rete r = new Rete();
-		    Context c = r.getGlobalContext();
-		    Funcall f = new Funcall("set-reset-globals", r);
-		    f.arg(Funcall.TRUE);
-		    Value result = f.execute(c);
-		    System.out.println(result);
-			
-	       // Rete engine = new Rete();
-	        //Declaring the deftemplates/fact for the jess project
-	        engine.eval("(deftemplate person (slot name)(slot age) (slot adhdFactor))");
-	        engine.eval("(deffunction square (?n) (return (* ?n ?n)))");
-	        Value value2 = engine.eval("(square 3)");
-	        System.out.println(value2.intValue(engine.getGlobalContext()));
-	        
+//			
+//			Rete r = new Rete();
+//		    Context c = r.getGlobalContext();
+//		    Funcall f = new Funcall("set-reset-globals", r);
+//		    f.arg(Funcall.TRUE);
+//		    Value result = f.execute(c);
+//		    System.out.println(result);
+//			
+//	       // Rete engine = new Rete();
+//	        //Declaring the deftemplates/fact for the jess project
+//	        engine.eval("(deftemplate person (slot name)(slot age) (slot adhdFactor))");
+//	        engine.eval("(deffunction square (?n) (return (* ?n ?n)))");
+//	        Value value2 = engine.eval("(square 3)");
+//	        System.out.println(value2.intValue(engine.getGlobalContext()));
+//	        
 	    } 
 		catch (JessException ex)
 		{
-	        System.err.println(ex);
+	        System.err.println(ex.toString());
 	    }   
 	}
 }
