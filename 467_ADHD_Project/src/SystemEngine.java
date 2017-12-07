@@ -43,64 +43,69 @@ public class SystemEngine extends HttpServlet
     			 */
     			
     			String age = request.getParameter("Age");
-    			int q1Ans = Integer.parseInt(request.getParameter("Q1")); // How often do you find yourself distracted?
+    			int q1Ans = Integer.parseInt(request.getParameter("Q1")); 
     			int q2Ans = Integer.parseInt(request.getParameter("Q2"));
     			int q3Ans = Integer.parseInt(request.getParameter("Q3"));
-    			int q4Ans = Integer.parseInt(request.getParameter("Q4")); // Subtract from adhd factor for defrule
-    			int q5Ans = Integer.parseInt(request.getParameter("Q5")); // if yes add, if no subtract 
+    			int q4Ans = Integer.parseInt(request.getParameter("Q4")); 
+    			int q5Ans = Integer.parseInt(request.getParameter("Q5")); 
     			int q6Ans = Integer.parseInt(request.getParameter("Q6"));
-
-    			
+    			int q7Ans = Integer.parseInt(request.getParameter("Q7")); 
+    			int q8Ans = Integer.parseInt(request.getParameter("Q8"));
+    			int q9Ans = Integer.parseInt(request.getParameter("Q9"));
+    			int q10Ans = Integer.parseInt(request.getParameter("Q10")); 
+    			int q11Ans = Integer.parseInt(request.getParameter("Q11")); 
+    			int q12Ans = Integer.parseInt(request.getParameter("Q12"));
+    			int q13Ans = Integer.parseInt(request.getParameter("Q13")); 
+    			int q14Ans = Integer.parseInt(request.getParameter("Q14"));
+    			int q15Ans = Integer.parseInt(request.getParameter("Q15"));
+    			int q16Ans = Integer.parseInt(request.getParameter("Q16")); 
+    			int q17Ans = Integer.parseInt(request.getParameter("Q17")); 
+    			int q18Ans = Integer.parseInt(request.getParameter("Q18"));
+    			/*
+    			 * Getting the userinput from the Java Server Page
+    			 */
     			int[] ans = new int[6];
     			ans[0] = q1Ans;
     			ans[1] = q2Ans;
     			ans[2] = q3Ans;
-    			ans[3] = q4Ans; // subtraction value 
+    			ans[3] = q4Ans; 
     			ans[4] = q5Ans;
     			ans[5] = q6Ans;
-
+    			ans[6] = q7Ans;
+    			ans[7] = q8Ans;
+    			ans[8] = q9Ans;
+    			ans[9] = q10Ans; 
+    			ans[10] = q11Ans;
+    			ans[11] = q12Ans;
+    			ans[12] = q13Ans;
+    			ans[13] = q14Ans;
+    			ans[14] = q15Ans;
+    			ans[15] = q16Ans; 
+    			ans[16] = q17Ans;
+    			ans[17] = q18Ans;
     			
     			
-    			System.out.println( age + " " + q1Ans + " " + q2Ans +  " " + q3Ans + " " + q4Ans + " " + q5Ans + " " + q6Ans );
-    			
-    			//
     	        Rete engine = new Rete();
     	      
-    	        
 			engine.batch("Rules.clp");
 			engine.eval("(deftemplate questions" + " (slot q1)" + " (slot q2)" + " (slot q3)" + " (slot q4)" + " (slot q5)" + " (slot q6)" + ")" +
-					"(defglobal ?*risk-factor* = 0)" +
-					"(assert(questions (q1 "+q1Ans+") (q2 "+ q2Ans+")"+" (q3 "+ q3Ans+")"+" (q4 "+ q4Ans+")" +" (q5 "+ q5Ans +")" +" (q6 "+ q6Ans +"))"//+
-//					
-);
+					"(assert(questions (q1 "+q1Ans+") (q2 "+ q2Ans+")"+" (q3 "+ q3Ans+")"+" (q4 "+ q4Ans+")" +" (q5 "+ q5Ans +")" +" (q6 "+ q6Ans +")"+
+					"(q7 "+q7Ans+") (q8 "+ q8Ans+")"+" (q9 "+ q9Ans+")"+" (q10 "+ q10Ans+")" +" (q11 "+ q11Ans +")" +" (q12 "+ q12Ans +")" +
+					"(q13 "+q13Ans+") (q14 "+ q14Ans+")"+" (q15 "+ q15Ans+")"+" (q16 "+ q16Ans+")" +" (q17 "+ q17Ans +")" +" (q18 "+ q18Ans +")))"
+					//Add the question answers from the user to create a questions fact 
+					);
+			engine.run();
 			
-	        //System.out.println("After Assert");
 
     	        
-			//Add all 
 	        
-//	        engine.eval("(defrule Q1Never \n" + 
-//					"(questions (q1 ?q1) (q2 ?q2) (q3 ?q3) (q4 ?q4) (q5 ?q5) (q6 ?q6))\n" + 
-//					"(test (= ?q1 0))\n" + 
-//					"=>\n" + 
-//					"  (bind ?*risk-factor*(+ ?*risk-factor* 0))\n" + 
-//					"  (printout t \"risk factor = \" ?*risk-factor* crlf)\n" + 
-//					")"+
-//					"(run)");
-//			
-			// Defrule q1Never = (Defrule) engine.findDefrule("Q1Never");
-		//	    System.out.println(new PrettyPrinter(q1Never));
-
-//			  engine.run();
-//			  engine.
-//			  engine.setEventMask(JessEvent.DEFRULE_FIRED);
-//			  
+			  
 			System.out.println("After Run");
     			
 			
 			
 			
-			//Content that will printout reuslts to a new page
+			//Content that will printout results to a new page
 			String docType = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 "+
 					"Transitional//EN\">\n";
 			String bc = "#051C2C";
@@ -142,7 +147,7 @@ public class SystemEngine extends HttpServlet
 			        "<title>Test Results</title>"+
 			        "</head>" +
 			        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\">"+
-			        "<title>Bears</title>"+
+			        "<title>Results</title>"+
 			        "</head>"+ 
 			        "<div class=\"topnav\">"+
 			        "<a href=\"index.jsp\">Home</a>"+
@@ -154,13 +159,11 @@ public class SystemEngine extends HttpServlet
 	        );
 			 out.println("</BODY></HTML>");
 	        
-			 
-				//Content that will printout reuslts to a new page=============================================================
-	        
-	       // engine.eval("(deffunction square (?n) (return (* ?n ?n)))");
-	       // Value value = engine.eval("(square 3)");
-	     
-	        
+			 Iterator rules =  engine.listDefrules();
+			 while(rules.hasNext())
+		     {
+		       System.out.println("RuleName: "+rules.next().toString());
+		     }	         
 	      //  System.out.println(value.intValue(engine.getGlobalContext()));
 		 } 
 			catch (JessException ex)
@@ -209,13 +212,10 @@ public class SystemEngine extends HttpServlet
 		     
 		     
 		    //System.out.println("Concern: " + concern.concernLevel);
-		    Iterator rules =  engine.listDefrules();
+			    Iterator rules =  engine.listDefrules();
 		    
 		    
-		    while(rules.hasNext())
-		    {
-		    System.out.println("RuleName: "+rules.next().toString());
-		    }
+		    
 		    
 		    Iterator facts = engine.listFacts();
 		    

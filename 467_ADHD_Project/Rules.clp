@@ -25,7 +25,7 @@
 
 (assert(RiskFactor(factor 0)))
 
-(defglobal ?*risk-factor* = 0)
+;(defglobal ?*risk-factor* = 0)
 
 ;(assert(questions (q1 0) (q2 3) (q3 9) (q4 9) (q5 6) (q6  6)
 ;(q7 0) (q8 3) (q9 0) (q10 9) (q11 6) (q12  3)
@@ -681,8 +681,3 @@
 	 	(printout t  "High " ?factor " Out of 156" crlf)
 		(assert(Concern (concern HIGH)))
 		)
-
-
-
-
-;(run)
