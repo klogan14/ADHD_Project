@@ -27,9 +27,9 @@
 
 (defglobal ?*risk-factor* = 0)
 
-(assert(questions (q1 0) (q2 3) (q3 9) (q4 9) (q5 6) (q6  6)
-(q7 0) (q8 3) (q9 0) (q10 9) (q11 6) (q12  3)
-(q13 0) (q14 3) (q15 1) (q16 0) (q17 1) (q18  1)))
+;(assert(questions (q1 0) (q2 3) (q3 9) (q4 9) (q5 6) (q6  6)
+;(q7 0) (q8 3) (q9 0) (q10 9) (q11 6) (q12  3)
+;(q13 0) (q14 3) (q15 1) (q16 0) (q17 1) (q18  1)))
 
 ;(declare (from-class RiskFactor)
 ;             (include-variables TRUE))
@@ -623,8 +623,6 @@
 	(assert (q18Risk(factor 0)))
 )
 
-
-
 (defrule addUpRiskFactor
 	(q1Risk(factor ?q1Risk))
 	(q2Risk(factor ?q2Risk))
@@ -648,12 +646,6 @@
 	(assert(RiskFactor (factor (+(+(+(+ ?q1Risk ?q2Risk) (+ ?q3Risk ?q4Risk)) (+(+ ?q5Risk ?q6Risk) (+ ?q7Risk ?q8Risk))(+(+(+ ?q9Risk ?q10Risk) (+ ?q11Risk ?q12Risk)) (+(+ ?q13Risk ?q14Risk) (+ ?q15Risk ?q16Risk))))(+ ?q17Risk ?q18Risk))))
 ))
 
-;(defrule ifBiggerThan20
-;	(test(>  ?*risk-factor* 2 ))
-;	=>
-;	(printout t ?*risk-factor* " < "  crlf)
-;)
-
 (defrule low
 	(RiskFactor (factor ?factor&:(< ?factor 23.2)))
 	=>
@@ -670,34 +662,27 @@
 	)
 
 	(defrule Med
-
 		(RiskFactor (factor ?factor&:(and(>= ?factor 51.4)(<= ?factor 89.6))))
 		=>
 	 	(printout t  "MED " ?factor " Out of 156" crlf)
 		(assert (Concern (concern MED)))
-
 		)
 
 	(defrule MedHigh
-
 		(RiskFactor (factor ?factor&:(and(>= ?factor 84.6)(<= ?factor 122.8))))
-		=>
+			=>
 	 	(printout t  "MED HIGH " ?factor " Out of 156" crlf)
 		(assert (Concern (concern MEDHIGH)))
-
 		)
 
 	(defrule High
-
 		(RiskFactor (factor ?factor&:(and(>= ?factor 117.8)(<= ?factor 157))))
 		=>
 	 	(printout t  "High " ?factor " Out of 156" crlf)
-		(assert (Concern (concern HIGH)))
+		(assert(Concern (concern HIGH)))
 		)
 
-(deffunction name(?param1)
-	(return (* ?param1 3))
-	)
+
 
 
 ;(run)

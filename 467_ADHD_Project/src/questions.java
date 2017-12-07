@@ -1,22 +1,22 @@
 
 public class questions 
 {
-	String q1;
-	String q2;
-	String q3;
-	String q4;
-	String q5;
-	String q6;
-	String q7;
-	String q8;
-	String q9;
-	String q10;
-	String q11;
-	String q12;
-	String q13;
-	String q14;
-	String q15;
-	String q16;
-	String q17;
-	String q18;
+	int q1 = 0 ;
+	int q2= 0;
+	int q3= 0;
+	int q4= 0;
+	int q5= 0;
+	int q6= 0;
+	int q7= 0;
+	int q8= 0;
+	int q9= 0;
+	int q10= 0;
+	int q11= 0;
+	int q12= 0;
+	int q13= 0;
+	int q14= 0;
+	int q15= 0;
+	int q16= 1;
+	int q17= 1;
+	int q18= 1;
 }
