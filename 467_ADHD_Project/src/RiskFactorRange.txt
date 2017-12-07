@@ -1,0 +1,30 @@
+156 max
+-10 min 
+
+	[Low is range size of 33.2, all others are 38.2 range]
+
+	166 divided by 5 different factor values/membership functions 
+	evenly distributed with an overlap of 5 for each section to allow for some "fuzziness" 
+
+	Low
+	 -10 - 23.2
+	
+	Low Med 
+	 18.2 - 56.4
+	
+	Med: 
+	51.4 - 89.6
+	
+	Med High:
+	 84.6 - 122.8
+	
+	High:
+	 117.8 - 156
+	 
+	 
+	 (assert(questions (q1 6) (q2 3) (q3 9) (q4 9) (q5 6) (q6  6) (q7 6) (q8 3) (q9 9) (q10 9) (q11 6) (q12  3) (q13 6) (q14 6) (q15 1) (q16 0) (q17 1) (q18  1))) // Med score 97
+	 (assert(questions (q1 6) (q2 6) (q3 9) (q4 9) (q5 6) (q6  6) (q7 6) (q8 3) (q9 9) (q10 9) (q11 6) (q12  3) (q13 6) (q14 6) (q15 0) (q16 1) (q17 1) (q18  1))) //med high, high 120
+	 
+	 (assert(questions (q1 0) (q2 0) (q3 9) (q4 6) (q5 6) (q6  3) (q7 0) (q8 3) (q9 0) (q10 6) (q11 6) (q12  3) (q13 0) (q14 3) (q15 1) (q16 0) (q17 1) (q18  0)))
+	 
+	 

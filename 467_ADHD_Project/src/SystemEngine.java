@@ -1,6 +1,10 @@
+import java.awt.TextArea;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jess.*;
+import jess.awt.TextAreaWriter;
 @WebServlet("/SystemEngine")
 public class SystemEngine extends HttpServlet 
 {
@@ -164,31 +169,40 @@ public class SystemEngine extends HttpServlet
 		    }
 	}
     
-	public static void main(String[] unused) 
+	public static void main(String[] unused) throws ClassNotFoundException 
 	{        
 		try 
 		{	
-			engine.reset();
             engine.batch("Rules.clp");
+			engine.reset();
 
 		    //engine.add("(assert(questions (q1 "+5+") (q2 "+ 1+")"+" (q3 "+ 1+")"+" (q4 "+ 1+")" +" (q5 "+ 1 +")" +" (q6 "+ 1 +"))");
-            engine.add("(assert(questions (q1 "+0+") (q2 "+ 3+")"+" (q3 "+ 9+")"+" (q4 "+ 1+")" +" (q5 "+ 0 +")" +" (q6 "+ 1 +")))" );
+            //engine.add("(assert(questions (q1 "+0+") (q2 "+ 3+")"+" (q3 "+ 9+")"+" (q4 "+ 1+")" +" (q5 "+ 0 +")" +" (q6 "+ 1 +")))" );
+            engine.add("(assert(questions (q1 "+0+") (q2 "+ 3+")"+" (q3 "+ 9+")"+" (q4 "+ 1+")" +" (q5 "+ 0 +")" +" (q6 "+ 1 +")"+ 
+            "(q7 "+0+") (q8 "+ 3+")"+" (q9 "+ 9+")"+" (q10 "+ 1+")" +" (q11 "+ 0 +")"  +"(q12 "+0+") (q13 "+ 3+")"+" (q14 "+ 9+")"+" (q15 "+ 1+")" +" (q16 "+ 0 +")"+
+            "(q17 "+0+") (q18 "+ 3+")"+"))" );
+            engine.add("(assert(RiskFactor(factor 0))");
+                    
             int val = engine.run();
+           
             System.out.println("Return from run" + val);
             Defrule q1Never = (Defrule) engine.findDefrule("Q1Never");
             Defrule q2Never = (Defrule) engine.findDefrule("Q2Sometimes");
-            
             WorkingMemoryMarker mark =  engine.mark();
             engine.resetToMark(mark);
-            //engine.executeCommand("Q1Never");
+            engine.executeCommand("Q1Never");
+          
             engine.run();
-            Value val2 = engine.eval("(run)");
+            Value val2 = engine.eval("(facts)");
            
             System.out.println("VAL: " + val2.toStringWithParens());
 		    System.out.println(new PrettyPrinter(q1Never));
 		    System.out.println(new PrettyPrinter(q2Never));
 
-//			
+		    RiskFactor rf = new RiskFactor(0);
+		    
+		    engine.getObjects(new Filter.ByClass(RiskFactor.class));
+		    
 //			Rete r = new Rete();
 //		    Context c = r.getGlobalContext();
 //		    Funcall f = new Funcall("set-reset-globals", r);
@@ -196,14 +210,31 @@ public class SystemEngine extends HttpServlet
 //		    Value result = f.execute(c);
 //		    System.out.println(result);
 //			
-//	       // Rete engine = new Rete();
-//	        //Declaring the deftemplates/fact for the jess project
-//	        engine.eval("(deftemplate person (slot name)(slot age) (slot adhdFactor))");
+//	        Rete engine = new Rete();
 //	        engine.eval("(deffunction square (?n) (return (* ?n ?n)))");
 //	        Value value2 = engine.eval("(square 3)");
 //	        System.out.println(value2.intValue(engine.getGlobalContext()));
-//	        
-	    } 
+//	        		    		    
+//		    List rules = (List) engine.listDefrules();
+		    	engine.reset();
+		    	engine.add("(assert(questions (q1 "+0+") (q2 "+ 3+")"+" (q3 "+ 9+")"+" (q4 "+ 1+")" +" (q5 "+ 0 +")" +" (q6 "+ 1 +")"+ 
+		                "(q7 "+0+") (q8 "+ 3+")"+" (q9 "+ 9+")"+" (q10 "+ 1+")" +" (q11 "+ 0 +")"  +"(q12 "+0+") (q13 "+ 3+")"+" (q14 "+ 9+")"+" (q15 "+ 1+")" +" (q16 "+ 0 +")"+
+		                "(q17 "+0+") (q18 "+ 3+")"+"))" );
+		      Value va3 = engine.eval("(run)");
+		      System.out.println("VA3: " + va3.intValue(engine.getGlobalContext()));
+		      
+		    engine.add(rf);  
+		    String riskFactor = "(assert(RiskFactor(factor 0))";  
+		    engine.add(rf);
+            Class rfClass2 = engine.findClass("RiskFactor");
+           
+            System.out.println("asdf: " + rfClass2.getName());
+		    Object rfClass = engine.getClass();
+		    
+		    
+		    System.out.println();
+		  
+		} 
 		catch (JessException ex)
 		{
 	        System.err.println(ex.toString());
